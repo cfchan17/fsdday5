@@ -1,0 +1,49 @@
+{{#each articles}}
+<div class="row pb-5 {{#if @first}}mt-5{{/if}} {{#unless @last}}mb-5 border-bottom{{/unless}}">
+    <div class="col">
+        <div class="row mb-3">
+            <div class="col">
+                <h3>{{ this.title }}</h3>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="d-flex justify-content-center">
+                    {{#if this.urlToImage}}
+                        <img src="{{this.urlToImage}}" alt="news_image" style="max-width:600px;">
+                    {{else}}
+                        <img src="ruters.jpg" alt="ruters" style="max-width:600px;">
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{#if this.description}}
+                    <p><b>{{this.description}}</b></p>
+                {{else}}
+                    <p><b>No summary. Click "Read Full Story" to see more.</b></p>
+                {{/if}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p style="font-size: 11px;">{{this.publishedAt}}</p>
+            </div>
+            <div class="col-6">
+                <div class="d-flex flex-row-reverse">
+                    <a href="{{this.url}}" target="_blank">Read Full Story</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="row mt-5">
+    <div class="col">
+        <div class="d-flex justify-content-center">
+            <h5>No news articles were found for your search queries!</h5>
+        </div>
+    </div>
+</div>
+{{/each}}

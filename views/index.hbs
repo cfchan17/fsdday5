@@ -1,0 +1,42 @@
+<div class="row mt-4">
+    <div class="col">
+        <h2>News Search</h2>
+    </div>
+</div>
+<form method="get" action="/search">
+    <div class="row mb-3">
+        <div class="col">
+            <input class="form-control" type="text" name="searchTerm" placeholder="Enter search keywords">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="d-flex flex-wrap justify-content-center">
+                {{#each flags}}
+                    <div class="form-check d-flex flex-column justify-content-center {{#unless @last}}mr-5{{/unless}}">
+                        <input class="form-check-input" type="radio" name="country" id="{{@key}}" value="{{@key}}" {{#if @first}} checked {{/if}}>
+                        <label class="form-check-label" for="{{@key}}">
+                            <img src="/flags/{{this}}" alt="{{@key}}">
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <select class="form-control" name="category">
+                {{#each category}}
+                    <option {{#if @first}}selected{{/if}}>{{ this }}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="d-flex flex-row-reverse">
+                <input class="btn btn-outline-secondary" type="submit" value="Submit">
+            </div>
+        </div>
+    </div>
+</form>
