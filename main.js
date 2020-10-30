@@ -54,23 +54,37 @@ const createURL = (q, country, category) => {
 
 //Call API
 const apiCall = async (url, res) => {
-    const result = await fetch(url,
-        {headers: 
-            {
-                'X-Api-Key': API_KEY
+    try{
+        console.info('GET ' + url)
+        const result = await fetch(url,
+            {headers: 
+                {
+                    'X-Api-Key': API_KEY
+                }
             }
-        }
-    )
-    const jsonResult = await result.json()
-
-    //Cache results and set time to live to 15 minutes
-    let a = new Date()
-    let b = new Date(a.getTime() + 15 * 60000)
-
-    apiCallArray.push(url)
-    ttlArray.push(b)
-    apiCallResult.push(jsonResult.articles)
-    renderResultsPage(jsonResult.articles, res)
+        )
+        const jsonResult = await result.json()
+    
+        //Cache results and set time to live to 15 minutes
+        let a = new Date()
+        let b = new Date(a.getTime() + 15 * 60000)
+    
+        apiCallArray.push(url)
+        ttlArray.push(b)
+        apiCallResult.push(jsonResult.articles)
+    
+        renderResultsPage(jsonResult.articles, res)
+    }
+    catch(e) {
+        console.info(e)
+        res.status(503)
+        res.type('text/html')
+        res.render('index',
+        {
+            flags,
+            category
+        })
+    }
 }
 
 //Render results page
@@ -109,6 +123,7 @@ app.get('/search',
                 apiCall(url, res)
             }
             else {
+                console.info('GET from cache')
                 renderResultsPage(apiCallResult[index], res)
             }
         }
